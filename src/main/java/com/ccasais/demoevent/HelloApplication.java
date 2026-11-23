@@ -69,7 +69,6 @@ public class HelloApplication extends Application {
         VBox.setMargin(input, STANDARED);
         HBox buttons = new HBox();
         Button toInput = new Button("Introducir");
-        algo
         Button toReset = new Button("Reiniciar");
 
         root.getChildren().addAll(markers, firstText, output, input);
