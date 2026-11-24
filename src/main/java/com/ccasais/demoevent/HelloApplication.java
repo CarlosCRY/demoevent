@@ -69,6 +69,13 @@ public class HelloApplication extends Application {
         VBox.setMargin(input, STANDARED);
         HBox buttons = new HBox();
         Button toInput = new Button("Introducir");
+        toInput.setOnAction(e ->{
+            try {
+                if (n > Integer.valueOf(input.getText())) {
+                    result.setText("¡Fallaste! Es un número mayor.");
+                }
+            }
+        });
         Button toReset = new Button("Reiniciar");
 
         root.getChildren().addAll(markers, firstText, output, input);
