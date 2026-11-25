@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import java.util.Random;
 
-public class HelloApplication extends Application {
+public class Calculator extends Application {
 
     private static Scene scene;
     private static Insets STANDARED = new Insets (20, 0, 20, 0);
