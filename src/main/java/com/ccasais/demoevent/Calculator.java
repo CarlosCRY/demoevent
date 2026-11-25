@@ -13,7 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+import java.util.InputMismatchException;
 import java.util.Random;
 
 public class Calculator extends Application {
@@ -22,6 +22,9 @@ public class Calculator extends Application {
     private static Insets STANDARED = new Insets (20, 0, 20, 0);
     private static Font MARKERFONT = new Font(16);
     private static Random random = new Random();
+    private int nT = 0;
+    private int nS = 0;
+    private int n = random.nextInt(0,10);
     @Override
     public void start(Stage stage) throws IOException {
         VBox root = new VBox();
@@ -29,7 +32,6 @@ public class Calculator extends Application {
         HBox mContainer1 = new HBox();
         Label marker1 = new Label("Intentos: ");
         marker1.setFont(MARKERFONT);
-        int nT = 0;
         Label tries = new Label();
         tries.setText(String.valueOf(nT));
         tries.setFont(MARKERFONT);
@@ -38,7 +40,6 @@ public class Calculator extends Application {
         HBox mContainer2 = new HBox();
         Label marker2 = new Label("Aciertos: ");
         marker2.setFont(MARKERFONT);
-        int nS = 0;
         Label success = new Label();
         success.setText(String.valueOf(nS));
         success.setFont(MARKERFONT);
@@ -53,7 +54,6 @@ public class Calculator extends Application {
         firstText.getChildren().addAll(title, instruction);
         VBox.setMargin(firstText, STANDARED);
         firstText.setAlignment(Pos.CENTER);
-        int n = random.nextInt(0,10);
         VBox output = new VBox();
         Label yap = new Label("El último número que has indroducido es:");
         yap.setFont(MARKERFONT);
@@ -71,14 +71,32 @@ public class Calculator extends Application {
         Button toInput = new Button("Introducir");
         toInput.setOnAction(e ->{
             try {
-                if (n > Integer.valueOf(input.getText())) {
+                if (n > Integer.parseInt(input.getText())) {
                     result.setText("¡Fallaste! Es un número mayor.");
+                    nT++;
+                } else if (n < Integer.parseInt(input.getText())) {
+                    result.setText("¡Fallaste! Es un número menor.");
+                    nT++;
+                } else {
+                    result.setText("¡Acertaste!");
+                    nT++;
+                    nS++;
+                    n = random.nextInt(0, 10);
                 }
+            } catch (NumberFormatException x) {
+                result.setText("¡Eso no es un número!");
             }
         });
         Button toReset = new Button("Reiniciar");
+        toReset.setOnAction(e ->{
+            nT = 0;
+            nS = 0;
+            n = random.nextInt(0, 10);
+            result.setText("Juego reiniciado");
+        });
+        buttons.getChildren().addAll(toInput, toReset);
 
-        root.getChildren().addAll(markers, firstText, output, input);
+        root.getChildren().addAll(markers, firstText, output, buttons);
         root.setAlignment(Pos.CENTER);
         scene = new Scene(root, 640, 480);
         stage.setScene(scene);
