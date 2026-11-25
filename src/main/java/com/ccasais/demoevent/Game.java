@@ -13,10 +13,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Random;
 
-public class Calculator extends Application {
+public class Game extends Application {
 
     private static Scene scene;
     private static Insets STANDARED = new Insets (20, 0, 20, 0);
